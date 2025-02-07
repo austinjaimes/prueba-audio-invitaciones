@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor Automático</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f4f4f4;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Reproductor Automático</h1>
+    <p>Si la música no inicia, haz clic en el botón.</p>
+    <button id="playButton" style="display: none;">Reproducir Música</button>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            const audioElement = new Audio("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3");
+            audioElement.loop = true;
+            audioElement.muted = true; // Comienza silenciado
+            
+            try {
+                await audioElement.play();
+                audioElement.muted = false; // Activa el sonido después de iniciar
+                console.log("Música reproducida automáticamente");
+            } catch (error) {
+                console.log("Autoplay bloqueado, mostrando botón", error);
+                document.getElementById("playButton").style.display = "block";
+            }
+
+            document.getElementById("playButton").addEventListener("click", async () => {
+                audioElement.muted = false;
+                await audioElement.play();
+                document.getElementById("playButton").style.display = "none";
+            });
+        });
+    </script>
+</body>
+</html>
